@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Snuffel – small-group dog walks in Saint-Gilles, Forest and Ixelles</title>
+<meta name="description" content="Small-group and solo dog walks in Saint-Gilles, Forest and Ixelles. Four dogs at most, a full hour outdoors, photo and route map after every walk.">
+<!-- Favicon as inline SVG so no extra file is needed -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%23D6E04B'/></svg>">
+<style>
+/* Fonts are self-hosted from /fonts so no visitor data goes to Google.
+   If the files are missing, the system font stacks below take over and the site still works. */
+@font-face{font-family:"Bricolage Grotesque";src:url("fonts/bricolage-grotesque-800.woff2") format("woff2");font-weight:800;font-display:swap}
+@font-face{font-family:"Atkinson Hyperlegible";src:url("fonts/atkinson-hyperlegible-400.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Atkinson Hyperlegible";src:url("fonts/atkinson-hyperlegible-700.woff2") format("woff2");font-weight:700;font-display:swap}
+
+/* Colour tokens: change these to rebrand the whole site */
+:root{
+  --green:#1E4634;   /* park green, hero and dark sections */
+  --moss:#E6EBDF;    /* page background */
+  --paper:#F6F8F2;   /* lighter band for prices */
+  --ink:#13231A;     /* main text */
+  --muted:#3F4F45;   /* secondary text, 7:1 on moss */
+  --ball:#D6E04B;    /* tennis-ball accent */
+  --rule:#B9C4B3;
+  --display:"Bricolage Grotesque",ui-rounded,"Arial Rounded MT Bold",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--moss);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.6}
+a{color:var(--green)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--ball);outline-offset:3px}
+h1,h2{font-family:var(--display);font-weight:800;letter-spacing:-0.025em;line-height:1;margin:0}
+h2{font-size:clamp(2.2rem,5vw,3.5rem)}
+p{margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(20px,5vw,50px)}
+.section{padding:clamp(64px,9vw,104px) 0}
+.muted{color:var(--muted)}
+.stack{display:flex;flex-direction:column;gap:20px}
+
+/* Buttons */
+.btn{display:inline-block;background:var(--ball);color:var(--ink);font-weight:700;text-decoration:none;padding:16px 28px;border-radius:999px;min-height:44px}
+.btn:hover{background:#E4ED6A}
+.btn-dark{background:var(--ink);color:var(--moss)}
+.btn-dark:hover{background:#24382C}
+
+/* Header */
+.dark{background:var(--green);color:var(--moss)}
+.dark a{color:var(--moss)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:24px;padding-bottom:24px;gap:24px}
+.logo{font-family:var(--display);font-weight:800;font-size:32px;color:var(--ball)!important;text-decoration:none}
+nav ul{list-style:none;margin:0;padding:0;display:flex;gap:28px;align-items:center}
+nav a{text-decoration:none}
+@media (max-width:860px){nav .hide-sm{display:none}}
+
+/* Hero */
+.hero .wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center;padding-top:48px;padding-bottom:88px}
+.hero h1{font-size:clamp(3.2rem,8vw,5.8rem);line-height:.95}
+.hero .lead{font-size:clamp(1.1rem,2vw,1.4rem);max-width:34ch}
+.hero .actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.hero .langs{color:#C9D4C4;font-size:16px}
+.hero svg{width:100%;height:auto;max-width:520px;justify-self:end}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr}.hero svg{max-width:360px;justify-self:start}}
+
+/* Steps: an ordered list because a walk really is a sequence */
+.steps{list-style:none;margin:40px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px}
+.steps li{border-top:3px solid var(--ink);padding-top:18px;display:flex;flex-direction:column;gap:8px}
+.steps .n{font-family:var(--display);font-weight:800;font-size:44px;color:var(--green);line-height:1}
+.steps strong{font-size:21px}
+@media (max-width:900px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
+
+/* Prices */
+.prices{background:var(--paper)}
+.prices .wrap{display:grid;grid-template-columns:340px 1fr;gap:72px}
+@media (max-width:860px){.prices .wrap{grid-template-columns:1fr;gap:32px}}
+.price-row{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:22px 0;border-bottom:1px solid var(--rule)}
+.price-row strong{display:block;font-size:22px}
+.price{font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,4vw,2.5rem);white-space:nowrap}
+
+/* Two-column text blocks */
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:72px}
+@media (max-width:760px){.two{grid-template-columns:1fr;gap:48px}}
+
+/* About */
+.about .wrap{display:grid;grid-template-columns:360px 1fr;gap:64px;align-items:center}
+.photo{aspect-ratio:4/5;border-radius:200px 200px 24px 24px;background:#2C5A45;display:flex;align-items:center;justify-content:center;color:#C9D4C4;text-align:center;padding:24px;overflow:hidden}
+.photo img{width:100%;height:100%;object-fit:cover}
+@media (max-width:760px){.about .wrap{grid-template-columns:1fr}.photo{max-width:300px}}
+
+/* FAQ uses native details/summary: accessible and works without JavaScript */
+.faq{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 64px;margin-top:32px}
+@media (max-width:760px){.faq{grid-template-columns:1fr}}
+details{border-bottom:1px solid var(--rule);padding:16px 0}
+summary{font-weight:700;font-size:20px;cursor:pointer;min-height:44px;display:flex;align-items:center}
+details p{margin-top:8px}
+
+/* Contact footer */
+.contact{background:var(--ball)}
+.contact .wrap{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap}
+.contact h2{font-size:clamp(2.4rem,6vw,4.5rem)}
+.legal{font-size:15px;text-align:right}
+@media (max-width:760px){.legal{text-align:left}}
+/* Let the booking widget take its own full-width row in the contact footer */
+.contact .wrap{flex-direction:column;align-items:stretch}
+.legal{text-align:left}
+</style>
+</head>
+<body>
+
+<header class="dark">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Snuffel, back to top">snuffel</a>
+    <nav aria-label="Main">
+      <ul>
+        <li class="hide-sm"><a href="#how">How it works</a></li>
+        <li class="hide-sm"><a href="#prices">Prices</a></li>
+        <li class="hide-sm"><a href="#area">Where we walk</a></li>
+        <li><a class="btn" href="#contact" style="color:var(--ink)">Book a meet-and-greet</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero dark">
+    <div class="wrap">
+      <div class="stack" style="gap:26px">
+        <h1>Slow walks for city dogs.</h1>
+        <p class="lead">Small-group sniff walks in Saint-Gilles, Forest and Ixelles. Groups of four dogs at most, with a photo and route map in your inbox after every walk.</p>
+        <div class="actions">
+          <a class="btn" href="#contact">Book a free meet-and-greet</a>
+          <a href="#prices" style="padding:16px 8px">See prices</a>
+        </div>
+        <p class="langs">On parle français. We spreken Nederlands. We speak English.</p>
+      </div>
+      <!-- Decorative route sketch; labels are real parks in the service area -->
+      <svg viewBox="0 0 520 520" role="img" aria-label="Sketch of a walking route linking Parc Duden and Parc de Forest">
+        <path d="M60 460 C 120 400, 40 330, 130 290 S 250 300, 260 220 S 200 110, 320 90 S 470 150, 440 260 S 360 380, 450 440" fill="none" stroke="#D6E04B" stroke-width="7" stroke-linecap="round" stroke-dasharray="1 16"/>
+        <circle cx="60" cy="460" r="14" fill="#D6E04B"/>
+        <circle cx="260" cy="220" r="14" fill="#D6E04B"/>
+        <circle cx="320" cy="90" r="14" fill="#D6E04B"/>
+        <circle cx="450" cy="440" r="14" fill="#D6E04B"/>
+        <g fill="#E6EBDF" font-family="Bricolage Grotesque, system-ui, sans-serif" font-size="20" font-weight="800">
+          <text x="84" y="466">Your front door</text>
+          <text x="284" y="228">Parc Duden</text>
+          <text x="210" y="60">Parc de Forest</text>
+          <text x="310" y="492">Home, tired</text>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <section id="how" class="section">
+    <div class="wrap">
+      <h2>What happens on a walk</h2>
+      <ol class="steps">
+        <li><span class="n" aria-hidden="true">1</span><strong>Pick-up</strong><span class="muted">I collect your dog from home with your key or door code, on an agreed time window.</span></li>
+        <li><span class="n" aria-hidden="true">2</span><strong>The walk</strong><span class="muted">We walk to the park, no van. Groups are matched by size and temperament, never more than four.</span></li>
+        <li><span class="n" aria-hidden="true">3</span><strong>Sniff time</strong><span class="muted">Dogs read the world through their nose. We slow down and let them, which settles them far better than a march.</span></li>
+        <li><span class="n" aria-hidden="true">4</span><strong>Home and update</strong><span class="muted">Paws get wiped and the door locked behind us. You get a photo and route map with a quick note on how it went.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="prices" class="section prices">
+    <div class="wrap">
+      <div class="stack">
+        <h2>Prices</h2>
+        <p class="muted">Pick-up, towels and the photo update are included, as are treats if you allow them. Small-business VAT exemption applies, so there is nothing added at the end.</p>
+        <p class="muted">The first meet-and-greet at your home is free, about 20 minutes.</p>
+      </div>
+      <div>
+        <div class="price-row"><div><strong>Group sniff walk</strong><span class="muted">60 minutes, up to four dogs</span></div><span class="price">€20</span></div>
+        <div class="price-row"><div><strong>Solo walk</strong><span class="muted">60 minutes, just your dog. For nervous, reactive or elderly dogs</span></div><span class="price">€30</span></div>
+        <div class="price-row"><div><strong>Short solo walk</strong><span class="muted">30 minutes around the block, puppies welcome</span></div><span class="price">€16</span></div>
+        <div class="price-row"><div><strong>10-walk card</strong><span class="muted">Group walks, valid three months</span></div><span class="price">€180</span></div>
+        <div class="price-row"><div><strong>Second dog from the same home</strong><span class="muted">Added to any walk</span></div><span class="price">+€10</span></div>
+        <div class="price-row"><div><strong>Weekends and public holidays</strong><span class="muted">Limited slots</span></div><span class="price">+€6</span></div>
+        <p class="muted" style="margin-top:20px;font-size:16px">Cancel up to 24 hours before for free. Later than that, half the walk is charged.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="area" class="section">
+    <div class="wrap two">
+      <div class="stack">
+        <h2>Where we walk</h2>
+        <p>Pick-ups in Saint-Gilles, Forest and lower Ixelles. Walks go to Parc Duden, Parc de Forest and the quieter green corners in between.</p>
+        <p>Dogs stay on the lead except in designated dog zones, and only once I know they come back when called.</p>
+        <p class="muted">Just outside the area? Ask anyway. If it fits a route, it works.</p>
+      </div>
+      <div class="stack">
+        <h2>Safety</h2>
+        <p>Covered by professional liability insurance for animal care. A canine first-aid kit comes on every walk.</p>
+        <p>In heatwaves we walk early and shorter. In storms we reschedule and tell you first.</p>
+        <p class="muted">Every dog needs a microchip, up-to-date vaccinations and flea and tick treatment before the first walk.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section about dark">
+    <div class="wrap">
+      <!-- Replace the placeholder text with <img src="luc.jpg" alt="Luc with a dog in Parc Duden"> -->
+      <div class="photo">[Photo of you with a dog in the park]</div>
+      <div class="stack">
+        <h2>Hi, I am Luc</h2>
+        <p style="font-size:20px;max-width:60ch">I live in Saint-Gilles. [One or two sentences on your history with dogs and why you started this.]</p>
+        <p style="font-size:20px;max-width:60ch">I keep groups small because a walk is the best part of a city dog's day, and it should not feel like a commute.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="section">
+    <div class="wrap">
+      <h2>Questions</h2>
+      <div class="faq">
+        <details><summary>When do walks happen?</summary><p class="muted">Weekdays, in a late-morning or midday slot. You pick a regular day or book one-offs when space allows.</p></details>
+        <details><summary>How do you handle keys?</summary><p class="muted">Keys are labelled with a code, never your address, and returned when you stop the service.</p></details>
+        <details><summary>My dog does not like other dogs.</summary><p class="muted">Then a solo walk is the right choice. We sort that out at the meet-and-greet.</p></details>
+        <details><summary>How do I pay?</summary><p class="muted">Monthly invoice by bank transfer, or a 10-walk card paid up front.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="contact" class="section contact">
+  <div class="wrap">
+    <div class="stack">
+      <h2>Book a free meet-and-greet</h2>
+      <p style="font-size:20px">Tell me your dog's name, age and your commune. I reply within a day.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+        <!-- Replace YOUR@EMAIL and the phone number (international format, no + or spaces, for wa.me) -->
+        <a class="btn btn-dark" href="mailto:YOUR@EMAIL?subject=Meet-and-greet%20for%20my%20dog">Email me</a>
+        <a href="https://wa.me/32000000000" style="color:var(--ink);font-weight:700;padding:16px 8px">WhatsApp</a>
+      </div>
+      <!-- Cal.com booking widget for meet-and-greets.
+           Replace YOURCALUSER/meet-and-greet with your own booking link.
+           loading="lazy" means nothing loads from Cal.com until the visitor scrolls here. -->
+      <div style="width:100%;margin-top:12px;background:#fff;border-radius:16px;overflow:hidden">
+        <iframe src="https://cal.com/YOURCALUSER/meet-and-greet?embed=true&amp;theme=light" title="Book a free meet-and-greet" loading="lazy" style="width:100%;height:700px;border:0"></iframe>
+      </div>
+    </div>
+    <!-- Belgian law requires the enterprise (BCE) number on a business website -->
+    <p class="legal">Snuffel<br>[Legal name], enterprise number [BCE 0xxx.xxx.xxx]<br>Saint-Gilles, Brussels</p>
+  </div>
+</footer>
+
+</body>
+</html>
